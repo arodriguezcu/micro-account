@@ -16,13 +16,10 @@ import org.springframework.kafka.core.ProducerFactory;
 import org.springframework.kafka.support.serializer.JsonSerializer;
 
 @Configuration
-public class Topic {
+public class AccountTopic {
   
-  @Value("${kafka.server.hostname}")
-  private String hostName;
-  
-  @Value("${kafka.server.port}")
-  private String port;
+  @Value("${spring.kafka.bootstrap-servers}")
+  private String host;
 
   @Bean
   public NewTopic createdAccountTopic() {
@@ -40,7 +37,7 @@ public class Topic {
   
   Map<String, Object> config = new HashMap<>();
   
-  config.put(ProducerConfig.BOOTSTRAP_SERVERS_CONFIG, hostName + ":" + port);
+  config.put(ProducerConfig.BOOTSTRAP_SERVERS_CONFIG, host);
   
   config.put(ProducerConfig.KEY_SERIALIZER_CLASS_CONFIG, StringSerializer.class);
   
