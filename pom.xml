@@ -12,9 +12,9 @@
   </parent>
   
   <groupId>com.everis</groupId>
-  <artifactId>account-service</artifactId>
+  <artifactId>micro-account</artifactId>
   <version>0.0.1-SNAPSHOT</version>
-  <name>account-service</name>
+  <name>micro-account</name>
   <description>Demo project for Spring Boot</description>
   
   <properties>
