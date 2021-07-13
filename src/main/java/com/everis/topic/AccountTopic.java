@@ -2,7 +2,6 @@ package com.everis.topic;
 
 import java.util.HashMap;
 import java.util.Map;
-
 import org.apache.kafka.clients.admin.NewTopic;
 import org.apache.kafka.clients.producer.ProducerConfig;
 import org.apache.kafka.common.serialization.StringSerializer;
@@ -15,43 +14,52 @@ import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.kafka.core.ProducerFactory;
 import org.springframework.kafka.support.serializer.JsonSerializer;
 
+/**
+ * Clase Topico.
+ */
 @Configuration
 public class AccountTopic {
-  
-  @Value("${spring.kafka.bootstrap-servers}")
-  private String host;
 
+  @Value("${kafka.server.hostname}")
+  private String hostName;
+
+  @Value("${kafka.server.port}")
+  private String port;
+
+  /** Creacion del Topico. */
   @Bean
   public NewTopic createdAccountTopic() {
-  
-  return TopicBuilder
-    .name("created-account-topic")
-    .partitions(1)
-    .replicas(1)
-    .build();
-  
+
+    return TopicBuilder
+      .name("created-account-topic")
+      .partitions(1)
+      .replicas(1)
+      .build();
+
   }
 
+  /** Creacion del Topico. */
   @Bean
   public ProducerFactory<String, Object> producerFactory() {
-  
-  Map<String, Object> config = new HashMap<>();
-  
-  config.put(ProducerConfig.BOOTSTRAP_SERVERS_CONFIG, host);
-  
-  config.put(ProducerConfig.KEY_SERIALIZER_CLASS_CONFIG, StringSerializer.class);
-  
-  config.put(ProducerConfig.VALUE_SERIALIZER_CLASS_CONFIG, JsonSerializer.class);
-  
-  return new DefaultKafkaProducerFactory<>(config);
-  
+
+    Map<String, Object> config = new HashMap<>();
+
+    config.put(ProducerConfig.BOOTSTRAP_SERVERS_CONFIG, hostName + ":" + port);
+
+    config.put(ProducerConfig.KEY_SERIALIZER_CLASS_CONFIG, StringSerializer.class);
+
+    config.put(ProducerConfig.VALUE_SERIALIZER_CLASS_CONFIG, JsonSerializer.class);
+
+    return new DefaultKafkaProducerFactory<>(config);
+
   }
 
+  /** Creacion del Topico. */
   @Bean
   public KafkaTemplate<String, Object> kafkaTemplate() {
-  
-  return new KafkaTemplate<>(producerFactory());
-  
+
+    return new KafkaTemplate<>(producerFactory());
+
   }
-  
+
 }

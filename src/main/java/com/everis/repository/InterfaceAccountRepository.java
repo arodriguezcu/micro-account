@@ -1,11 +1,13 @@
 package com.everis.repository;
 
 import com.everis.model.Account;
-
 import reactor.core.publisher.Mono;
 
-public interface IAccountRepository extends IRepository<Account, String> {
-  
+/**
+ * Interface de Metodos del Repositorio.
+ */
+public interface InterfaceAccountRepository extends InterfaceRepository<Account, String> {
+
   Mono<Account> findByAccountNumber(String accuntNumber);
-  
+
 }
